@@ -1,0 +1,13 @@
+bizd <- function(date1=Sys.Date(),date2,formatz="%Y/%m/%d") {
+        #This function takes two dates and calculates the number of business 
+        #days inbetween
+        c <- as.Date(date1,format=formatz)
+        d <- as.Date(date2,format=formatz)
+        #Get cal and make it a list of dates
+        cal <- dget("cal")
+        cal <- as.Date(cal)
+        #Get the full list of dates between now and the target date
+        b <- seq(c,d,by="1 days")
+        #Take the sum of all days except weekends and the dates included in cal
+        return(sum(as.POSIXlt(b)$wday %in% 1:5 & (!b %in% as.Date(cal))))
+}
